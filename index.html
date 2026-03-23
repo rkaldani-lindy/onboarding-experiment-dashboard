@@ -94,7 +94,7 @@
           <th>Cancellations</th>
           <th>Cancel Rate</th>
           <th>Cancel Lift vs Control</th>
-          <th>Stat Sig (Cancel)</th>
+          <th>Confidence (Cancel)</th>
         </tr>
       </thead>
       <tbody id="summaryTable"></tbody>
@@ -338,15 +338,13 @@ variants.forEach(v => {
     sigBadge = '<span class="badge badge-gray">baseline</span>';
   } else {
     const test = cancelZTest(a.ff_called, a.plan_cancelled, agg['control'].ff_called, agg['control'].plan_cancelled);
-    const pVal = test.p;
-    if (pVal < 0.01) {
-      sigBadge = '<span class="badge badge-green">p=' + pVal.toFixed(3) + '</span>';
-    } else if (pVal < 0.05) {
-      sigBadge = '<span class="badge badge-green">p=' + pVal.toFixed(3) + '</span>';
-    } else if (pVal < 0.10) {
-      sigBadge = '<span class="badge badge-yellow">p=' + pVal.toFixed(3) + '</span>';
+    const confidence = ((1 - test.p) * 100).toFixed(1);
+    if (test.p < 0.05) {
+      sigBadge = '<span class="badge badge-green">' + confidence + '%</span>';
+    } else if (test.p < 0.10) {
+      sigBadge = '<span class="badge badge-yellow">' + confidence + '%</span>';
     } else {
-      sigBadge = '<span class="badge badge-gray">p=' + pVal.toFixed(3) + '</span>';
+      sigBadge = '<span class="badge badge-gray">' + confidence + '%</span>';
     }
   }
 
