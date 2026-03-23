@@ -37,23 +37,23 @@
 <body>
 
 <h1>Post-Paywall Onboarding Experiment</h1>
-<p class="subtitle">Day-0 performance analysis across 5 variants &middot; March 13&ndash;19, 2026 &middot; Denominator = feature_flag_called</p>
+<p class="subtitle">Day-0 performance analysis across 5 variants &middot; March 13&ndash;22, 2026 &middot; Denominator = feature_flag_called</p>
 
 <div class="kpi-row">
   <div class="kpi">
     <div class="label">Users Exposed (FF Called)</div>
-    <div class="value" style="color:#58a6ff">1,004</div>
+    <div class="value" style="color:#58a6ff">1,364</div>
     <div class="sub">across all variants</div>
   </div>
   <div class="kpi">
     <div class="label">Messages Sent</div>
-    <div class="value" style="color:#3fb950">763</div>
-    <div class="sub">76.0% avg reply rate</div>
+    <div class="value" style="color:#3fb950">1,074</div>
+    <div class="sub">78.7% avg reply rate</div>
   </div>
   <div class="kpi">
     <div class="label">Cancellations</div>
-    <div class="value" style="color:#f85149">263</div>
-    <div class="sub">26.2% avg cancel rate</div>
+    <div class="value" style="color:#f85149">235</div>
+    <div class="sub">17.2% avg cancel rate</div>
   </div>
   <div class="kpi">
     <div class="label">Variants Tested</div>
@@ -65,7 +65,7 @@
 <div class="grid">
   <div class="card">
     <h2>Reply Rate Lift vs Control</h2>
-    <div class="desc">Relative % change from control's 74.0% reply rate</div>
+    <div class="desc">Relative % change from control's 77.9% reply rate</div>
     <div class="chart-container">
       <canvas id="replyLiftChart"></canvas>
     </div>
@@ -73,7 +73,7 @@
 
   <div class="card">
     <h2>Cancel Rate Lift vs Control</h2>
-    <div class="desc">Relative % change from control's 27.3% cancel rate. Negative = better.</div>
+    <div class="desc">Relative % change from control's 18.3% cancel rate. Negative = better.</div>
     <div class="chart-container">
       <canvas id="cancelLiftChart"></canvas>
     </div>
@@ -81,7 +81,7 @@
 
   <div class="card card-full">
     <h2>Variant Performance Summary</h2>
-    <div class="desc">Aggregated metrics across March 13&ndash;19. Rates use feature_flag_called as denominator. Lift calculated vs control.</div>
+    <div class="desc">Aggregated metrics across March 13&ndash;22. Rates use feature_flag_called as denominator. Lift calculated vs control.</div>
     <table>
       <thead>
         <tr>
@@ -116,41 +116,53 @@
 <script>
 const rawData = [
   {date:'Mar 13',variant:'control',ff_called:28,messages_sent:23,plan_cancelled:3,reply_rate:82.14,cancel_rate:10.71},
-  {date:'Mar 13',variant:'inbox-sniper',ff_called:30,messages_sent:18,plan_cancelled:5,reply_rate:60.0,cancel_rate:16.67},
-  {date:'Mar 13',variant:'calendar-sniper',ff_called:27,messages_sent:20,plan_cancelled:7,reply_rate:74.07,cancel_rate:25.93},
-  {date:'Mar 13',variant:'inbox-sniper-time-savings',ff_called:23,messages_sent:16,plan_cancelled:6,reply_rate:69.57,cancel_rate:26.09},
+  {date:'Mar 13',variant:'inbox-sniper',ff_called:30,messages_sent:18,plan_cancelled:3,reply_rate:60.0,cancel_rate:10.0},
+  {date:'Mar 13',variant:'calendar-sniper',ff_called:27,messages_sent:21,plan_cancelled:5,reply_rate:77.78,cancel_rate:18.52},
+  {date:'Mar 13',variant:'inbox-sniper-time-savings',ff_called:23,messages_sent:17,plan_cancelled:4,reply_rate:73.91,cancel_rate:17.39},
   {date:'Mar 13',variant:'inbox-sniper-with-inbox-triage-heads-up',ff_called:29,messages_sent:22,plan_cancelled:6,reply_rate:75.86,cancel_rate:20.69},
-  {date:'Mar 14',variant:'control',ff_called:27,messages_sent:19,plan_cancelled:4,reply_rate:70.37,cancel_rate:14.81},
-  {date:'Mar 14',variant:'inbox-sniper',ff_called:21,messages_sent:16,plan_cancelled:5,reply_rate:76.19,cancel_rate:23.81},
-  {date:'Mar 14',variant:'calendar-sniper',ff_called:27,messages_sent:22,plan_cancelled:4,reply_rate:81.48,cancel_rate:14.81},
-  {date:'Mar 14',variant:'inbox-sniper-time-savings',ff_called:22,messages_sent:15,plan_cancelled:5,reply_rate:68.18,cancel_rate:22.73},
-  {date:'Mar 14',variant:'inbox-sniper-with-inbox-triage-heads-up',ff_called:11,messages_sent:9,plan_cancelled:3,reply_rate:81.82,cancel_rate:27.27},
-  {date:'Mar 15',variant:'control',ff_called:27,messages_sent:15,plan_cancelled:7,reply_rate:55.56,cancel_rate:25.93},
-  {date:'Mar 15',variant:'inbox-sniper',ff_called:18,messages_sent:14,plan_cancelled:4,reply_rate:77.78,cancel_rate:22.22},
-  {date:'Mar 15',variant:'calendar-sniper',ff_called:18,messages_sent:12,plan_cancelled:4,reply_rate:66.67,cancel_rate:22.22},
-  {date:'Mar 15',variant:'inbox-sniper-time-savings',ff_called:21,messages_sent:19,plan_cancelled:6,reply_rate:90.48,cancel_rate:28.57},
-  {date:'Mar 15',variant:'inbox-sniper-with-inbox-triage-heads-up',ff_called:21,messages_sent:14,plan_cancelled:5,reply_rate:66.67,cancel_rate:23.81},
-  {date:'Mar 16',variant:'control',ff_called:37,messages_sent:25,plan_cancelled:18,reply_rate:67.57,cancel_rate:48.65},
-  {date:'Mar 16',variant:'inbox-sniper',ff_called:29,messages_sent:24,plan_cancelled:7,reply_rate:82.76,cancel_rate:24.14},
-  {date:'Mar 16',variant:'calendar-sniper',ff_called:38,messages_sent:26,plan_cancelled:15,reply_rate:68.42,cancel_rate:39.47},
-  {date:'Mar 16',variant:'inbox-sniper-time-savings',ff_called:19,messages_sent:17,plan_cancelled:4,reply_rate:89.47,cancel_rate:21.05},
-  {date:'Mar 16',variant:'inbox-sniper-with-inbox-triage-heads-up',ff_called:32,messages_sent:28,plan_cancelled:11,reply_rate:87.5,cancel_rate:34.38},
-  {date:'Mar 17',variant:'control',ff_called:31,messages_sent:25,plan_cancelled:8,reply_rate:80.65,cancel_rate:25.81},
-  {date:'Mar 17',variant:'inbox-sniper',ff_called:41,messages_sent:31,plan_cancelled:9,reply_rate:75.61,cancel_rate:21.95},
-  {date:'Mar 17',variant:'calendar-sniper',ff_called:27,messages_sent:20,plan_cancelled:9,reply_rate:74.07,cancel_rate:33.33},
-  {date:'Mar 17',variant:'inbox-sniper-time-savings',ff_called:41,messages_sent:35,plan_cancelled:10,reply_rate:85.37,cancel_rate:24.39},
-  {date:'Mar 17',variant:'inbox-sniper-with-inbox-triage-heads-up',ff_called:40,messages_sent:31,plan_cancelled:15,reply_rate:77.5,cancel_rate:37.5},
-  {date:'Mar 18',variant:'control',ff_called:47,messages_sent:37,plan_cancelled:13,reply_rate:78.72,cancel_rate:27.66},
-  {date:'Mar 18',variant:'inbox-sniper',ff_called:43,messages_sent:33,plan_cancelled:10,reply_rate:76.74,cancel_rate:23.26},
-  {date:'Mar 18',variant:'inbox-sniper-time-savings',ff_called:44,messages_sent:31,plan_cancelled:8,reply_rate:70.45,cancel_rate:18.18},
-  {date:'Mar 18',variant:'inbox-sniper-with-inbox-triage-heads-up',ff_called:42,messages_sent:34,plan_cancelled:10,reply_rate:80.95,cancel_rate:23.81},
-  {date:'Mar 19',variant:'control',ff_called:30,messages_sent:24,plan_cancelled:9,reply_rate:80.0,cancel_rate:30.0},
-  {date:'Mar 19',variant:'inbox-sniper',ff_called:29,messages_sent:22,plan_cancelled:12,reply_rate:75.86,cancel_rate:41.38},
-  {date:'Mar 19',variant:'inbox-sniper-time-savings',ff_called:35,messages_sent:25,plan_cancelled:13,reply_rate:71.43,cancel_rate:37.14},
-  {date:'Mar 19',variant:'inbox-sniper-with-inbox-triage-heads-up',ff_called:49,messages_sent:41,plan_cancelled:8,reply_rate:83.67,cancel_rate:16.33},
+  {date:'Mar 14',variant:'control',ff_called:27,messages_sent:19,plan_cancelled:3,reply_rate:70.37,cancel_rate:11.11},
+  {date:'Mar 14',variant:'inbox-sniper',ff_called:21,messages_sent:17,plan_cancelled:4,reply_rate:80.95,cancel_rate:19.05},
+  {date:'Mar 14',variant:'calendar-sniper',ff_called:27,messages_sent:23,plan_cancelled:2,reply_rate:85.19,cancel_rate:7.41},
+  {date:'Mar 14',variant:'inbox-sniper-time-savings',ff_called:22,messages_sent:16,plan_cancelled:2,reply_rate:72.73,cancel_rate:9.09},
+  {date:'Mar 14',variant:'inbox-sniper-with-inbox-triage-heads-up',ff_called:11,messages_sent:9,plan_cancelled:2,reply_rate:81.82,cancel_rate:18.18},
+  {date:'Mar 15',variant:'control',ff_called:27,messages_sent:17,plan_cancelled:3,reply_rate:62.96,cancel_rate:11.11},
+  {date:'Mar 15',variant:'inbox-sniper',ff_called:18,messages_sent:14,plan_cancelled:2,reply_rate:77.78,cancel_rate:11.11},
+  {date:'Mar 15',variant:'calendar-sniper',ff_called:18,messages_sent:12,plan_cancelled:2,reply_rate:66.67,cancel_rate:11.11},
+  {date:'Mar 15',variant:'inbox-sniper-time-savings',ff_called:21,messages_sent:19,plan_cancelled:4,reply_rate:90.48,cancel_rate:19.05},
+  {date:'Mar 15',variant:'inbox-sniper-with-inbox-triage-heads-up',ff_called:21,messages_sent:15,plan_cancelled:1,reply_rate:71.43,cancel_rate:4.76},
+  {date:'Mar 16',variant:'control',ff_called:37,messages_sent:27,plan_cancelled:10,reply_rate:72.97,cancel_rate:27.03},
+  {date:'Mar 16',variant:'inbox-sniper',ff_called:29,messages_sent:25,plan_cancelled:6,reply_rate:86.21,cancel_rate:20.69},
+  {date:'Mar 16',variant:'calendar-sniper',ff_called:38,messages_sent:28,plan_cancelled:9,reply_rate:73.68,cancel_rate:23.68},
+  {date:'Mar 16',variant:'inbox-sniper-time-savings',ff_called:19,messages_sent:17,plan_cancelled:3,reply_rate:89.47,cancel_rate:15.79},
+  {date:'Mar 16',variant:'inbox-sniper-with-inbox-triage-heads-up',ff_called:32,messages_sent:28,plan_cancelled:10,reply_rate:87.5,cancel_rate:31.25},
+  {date:'Mar 17',variant:'control',ff_called:31,messages_sent:26,plan_cancelled:6,reply_rate:83.87,cancel_rate:19.35},
+  {date:'Mar 17',variant:'inbox-sniper',ff_called:41,messages_sent:32,plan_cancelled:6,reply_rate:78.05,cancel_rate:14.63},
+  {date:'Mar 17',variant:'calendar-sniper',ff_called:27,messages_sent:21,plan_cancelled:6,reply_rate:77.78,cancel_rate:22.22},
+  {date:'Mar 17',variant:'inbox-sniper-time-savings',ff_called:41,messages_sent:35,plan_cancelled:8,reply_rate:85.37,cancel_rate:19.51},
+  {date:'Mar 17',variant:'inbox-sniper-with-inbox-triage-heads-up',ff_called:40,messages_sent:33,plan_cancelled:13,reply_rate:82.5,cancel_rate:32.5},
+  {date:'Mar 18',variant:'control',ff_called:47,messages_sent:40,plan_cancelled:9,reply_rate:85.11,cancel_rate:19.15},
+  {date:'Mar 18',variant:'inbox-sniper',ff_called:43,messages_sent:33,plan_cancelled:8,reply_rate:76.74,cancel_rate:18.6},
+  {date:'Mar 18',variant:'inbox-sniper-time-savings',ff_called:44,messages_sent:32,plan_cancelled:6,reply_rate:72.73,cancel_rate:13.64},
+  {date:'Mar 18',variant:'inbox-sniper-with-inbox-triage-heads-up',ff_called:42,messages_sent:35,plan_cancelled:8,reply_rate:83.33,cancel_rate:19.05},
+  {date:'Mar 19',variant:'control',ff_called:30,messages_sent:25,plan_cancelled:8,reply_rate:83.33,cancel_rate:26.67},
+  {date:'Mar 19',variant:'inbox-sniper',ff_called:29,messages_sent:22,plan_cancelled:9,reply_rate:75.86,cancel_rate:31.03},
+  {date:'Mar 19',variant:'inbox-sniper-time-savings',ff_called:35,messages_sent:26,plan_cancelled:8,reply_rate:74.29,cancel_rate:22.86},
+  {date:'Mar 19',variant:'inbox-sniper-with-inbox-triage-heads-up',ff_called:49,messages_sent:43,plan_cancelled:3,reply_rate:87.76,cancel_rate:6.12},
+  {date:'Mar 20',variant:'control',ff_called:28,messages_sent:26,plan_cancelled:3,reply_rate:92.86,cancel_rate:10.71},
+  {date:'Mar 20',variant:'inbox-sniper',ff_called:34,messages_sent:29,plan_cancelled:5,reply_rate:85.29,cancel_rate:14.71},
+  {date:'Mar 20',variant:'inbox-sniper-time-savings',ff_called:35,messages_sent:27,plan_cancelled:7,reply_rate:77.14,cancel_rate:20.0},
+  {date:'Mar 20',variant:'inbox-sniper-with-inbox-triage-heads-up',ff_called:37,messages_sent:29,plan_cancelled:5,reply_rate:78.38,cancel_rate:13.51},
+  {date:'Mar 21',variant:'control',ff_called:25,messages_sent:19,plan_cancelled:7,reply_rate:76.0,cancel_rate:28.0},
+  {date:'Mar 21',variant:'inbox-sniper',ff_called:22,messages_sent:16,plan_cancelled:3,reply_rate:72.73,cancel_rate:13.64},
+  {date:'Mar 21',variant:'inbox-sniper-time-savings',ff_called:30,messages_sent:29,plan_cancelled:4,reply_rate:96.67,cancel_rate:13.33},
+  {date:'Mar 21',variant:'inbox-sniper-with-inbox-triage-heads-up',ff_called:24,messages_sent:17,plan_cancelled:5,reply_rate:70.83,cancel_rate:20.83},
+  {date:'Mar 22',variant:'control',ff_called:32,messages_sent:21,plan_cancelled:5,reply_rate:65.63,cancel_rate:15.63},
+  {date:'Mar 22',variant:'inbox-sniper',ff_called:39,messages_sent:27,plan_cancelled:3,reply_rate:69.23,cancel_rate:7.69},
+  {date:'Mar 22',variant:'inbox-sniper-time-savings',ff_called:20,messages_sent:16,plan_cancelled:2,reply_rate:80.0,cancel_rate:10.0},
+  {date:'Mar 22',variant:'inbox-sniper-with-inbox-triage-heads-up',ff_called:34,messages_sent:28,plan_cancelled:4,reply_rate:82.35,cancel_rate:11.76},
 ];
 
-const dates = ['Mar 13','Mar 14','Mar 15','Mar 16','Mar 17','Mar 18','Mar 19'];
+const dates = ['Mar 13','Mar 14','Mar 15','Mar 16','Mar 17','Mar 18','Mar 19','Mar 20','Mar 21','Mar 22'];
 const variants = ['control','inbox-sniper','calendar-sniper','inbox-sniper-time-savings','inbox-sniper-with-inbox-triage-heads-up'];
 const variantLabels = {
   'control': 'Control',
@@ -312,12 +324,12 @@ variants.forEach(v => {
   '</tr>';
 });
 
-document.getElementById('insights').innerHTML = '<div class="insight-box" style="margin-top:0"><strong>Inbox Sniper (Triage Heads-up) is now the top reply rate performer</strong> \u2014 at 79.9%, it\u2019s +8.0% above control\u2019s 74.0%. With more data (n=224), this variant also shows a lower cancel rate at 25.9% (-5.2% vs control). It\u2019s emerging as the best all-around variant.</div>' +
-'<div class="insight-box"><strong>Inbox Sniper (Time Savings) remains strong</strong> \u2014 77.1% reply rate (+4.1% vs control) with a 25.4% cancel rate (-7.1% vs control). A solid performer on both engagement and retention.</div>' +
-'<div class="insight-box"><strong>Inbox Sniper (original) is the best on cancellations</strong> \u2014 74.9% reply rate (+1.2% vs control) with the lowest cancel rate of all variants at 24.6% (-9.8% vs control). Modest reply lift but the strongest retention signal.</div>' +
-'<div class="insight-box"><strong>Calendar Sniper is the weakest and losing data</strong> \u2014 73.0% reply rate (-1.4% vs control, the only negative lift) with the highest cancel rate at 28.5% (+4.2% vs control). It also has no data for Mar 18\u201319, suggesting it may have been turned off.</div>' +
-'<div class="insight-box"><strong>All inbox-sniper variants now beat control on cancellations</strong> \u2014 With 7 days of data, every inbox-sniper variant shows a lower cancel rate than control (24.6\u201325.9% vs 27.3%). This is a consistent pattern across the board, suggesting the onboarding messaging helps with retention regardless of the specific variant.</div>' +
-'<div class="insight-box"><strong>Sample sizes are now more robust</strong> \u2014 Most variants have 200+ users exposed (ff_called), up from ~90\u2013120 with 4 days. Calendar Sniper is the exception at 137 due to missing recent days. The overall trends are solidifying.</div>';
+document.getElementById('insights').innerHTML = '<div class="insight-box" style="margin-top:0"><strong>Triage Heads-up leads on reply rate</strong> \u2014 81.2% vs control\u2019s 77.9%, a +4.2% relative lift. Time Savings is close behind at 80.7% (+3.6%). Both are consistent performers across the 10-day window with robust sample sizes (319 and 290 users).</div>' +
+'<div class="insight-box"><strong>Inbox Sniper (original) has the best cancel rate</strong> \u2014 16.0% vs control\u2019s 18.3%, a -12.4% relative improvement. The strongest retention signal of any variant.</div>' +
+'<div class="insight-box"><strong>All treatment variants beat control on cancellations</strong> \u2014 Cancel rates range from 16.0\u201317.9% vs control\u2019s 18.3%. Time Savings (16.6%) and Calendar Sniper (17.5%) also outperform. The consistent pattern across variants suggests onboarding messaging helps retention.</div>' +
+'<div class="insight-box"><strong>Calendar Sniper is comparable to other variants</strong> \u2014 76.6% reply rate and 17.5% cancel rate, though with a smaller sample (137, frozen since Mar 17). Its cancel rate actually beats control, but the limited data makes this less conclusive.</div>' +
+'<div class="insight-box"><strong>Cancel rates are lower than initially estimated</strong> \u2014 With a fully consistent query definition across all 10 days, the overall cancel rate is 17.2% (235/1,364), and all variants cluster tightly between 16\u201318%. The differences are relatively small, suggesting cancel rate may not be the strongest differentiator between variants.</div>' +
+'<div class="insight-box"><strong>Sample sizes are robust</strong> \u2014 Control has 312 users, most variants have 290\u2013319 exposed. Calendar Sniper is frozen at 137. With 10 days of consistent data, the overall trends are well-established.</div>';
 </script>
 </body>
 </html>
